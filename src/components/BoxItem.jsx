@@ -2,48 +2,56 @@ import React, {useCallback, useState} from 'react';
 import Item from "./Item";
 import update from "immutability-helper";
 import {useDispatch} from "react-redux";
+import {dragBoard} from "../store/action";
 
 const BoxItem = ({items}) => {
-    const dispatch = useDispatch();
-    const [cards, setCards] = useState(items)
 
-    const moveCard = useCallback((dragIndex, hoverIndex) => {
+    const [currentCard, setCurrentCard] = useState(null)
 
+    function dragStartHandler(e, card) {
+        setCurrentCard(card)
 
-        setCards((prevCards) =>
-            update(prevCards, {
-                $splice: [
-                    [dragIndex, 1],
-                    [hoverIndex, 0, prevCards[dragIndex]],
-                ],
-            }),
-        )
-            //dispatch({type:"DRAG", payload:cards})
     }
 
-    , [])
+    function dragEndHandler(e) {
 
+    }
 
+    function dragOverHandler(e) {
+        e.preventDefault()
+    }
 
-    const renderCard = useCallback((card, index) => {
-        return (
-            <Item
-                key={card.id}
-                index={index}
-                id={card.id}
-                text={card.text}
-                moveCard={moveCard}
-            />
-        )
-    }, [])
+    const dispatch = useDispatch()
 
+    function dropHandler(e, card) {
+        e.preventDefault()
+        const currentIndex = items.indexOf(currentCard)
+        const dropIndex = items.indexOf(card)
+        items.splice(currentIndex, 1)
+        items.splice(dropIndex, 0, currentCard)
+        dispatch(dragBoard((items.map(c=>{
+            return c;
+        }))))
+    }
 
+    const sortCards = (a,b) => {
+        if (items.indexOf(a) > items.indexOf(b)){
+            return 1
+        }
+        else {
+            return -1
+        }
+    }
 
     return (
         <div className={"board"}>
-            {items.map((card, i) => renderCard(card, i))}
-            {/*{cards.map((item) =>
-                <Item text={item.text}/>)}*/}
+            {items.sort(sortCards).map((card) =>
+                <Item
+                    dragStartHandler={(e)=>dragStartHandler(e, card)}
+                    dragEndHandler={(e)=>dragEndHandler(e)}
+                    dragOverHandler={(e)=>dragOverHandler(e)}
+                    dropHandler={(e)=>dropHandler(e, card)}
+                    text={card.text}/>)}
         </div>
     );
 };
