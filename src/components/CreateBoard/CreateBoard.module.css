@@ -1,0 +1,11 @@
+.form {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 80%;
+    margin-bottom:30px;
+
+}
+
+.element {
+    margin-bottom: 10px;
+}
