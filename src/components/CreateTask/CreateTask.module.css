@@ -1,0 +1,10 @@
+.form {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 0 10px 40px 10px;
+    width: 100%;
+}
+
+.element {
+    margin: 10px;
+}

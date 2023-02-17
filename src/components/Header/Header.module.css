@@ -9,4 +9,11 @@
     1px -1px 0 black,
     -1px 1px 0 black,
     -1px -1px 0 black;
+    transition: all linear .2s;
+}
+.header:hover {
+    text-shadow: 1px 1px 0 #0a4ce8,
+    1px -1px 0 #0a4ce8,
+    -1px 1px 0 #0a4ce8,
+    -1px -1px 0 #0a4ce8;
 }

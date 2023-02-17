@@ -5,12 +5,13 @@ import { Provider } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { store } from "./store";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <Provider store={store}>
-    <DndProvider backend={HTML5Backend}>
+    <BrowserRouter>
       <App />
-    </DndProvider>
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );

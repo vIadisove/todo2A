@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import Item from "../Item/Item";
 import { useDispatch } from "react-redux";
+
+import Item from "../Item/Item";
 import { deleteBoard, dragBoard } from "../../store/action";
+
 import classes from "./BoxItem.module.css";
 
 const BoxItem = ({ items }) => {
@@ -34,28 +36,24 @@ const BoxItem = ({ items }) => {
     );
   }
 
-  const sortCards = (a, b) => {
-    if (items.indexOf(a) > items.indexOf(b)) {
-      return 1;
-    } else {
-      return -1;
-    }
-  };
-
   const removeBoard = (card) => {
     dispatch(deleteBoard(card.id));
   };
 
   return (
     <div className={classes.board}>
-      {items.sort(sortCards).map((card) => (
+      {items.map((card) => (
         <Item
           dragStartHandler={(e) => dragStartHandler(e, card)}
           dragEndHandler={(e) => dragEndHandler(e)}
           dragOverHandler={(e) => dragOverHandler(e)}
           dropHandler={(e) => dropHandler(e, card)}
           text={card.text}
+          tasks={card.tasks.map((task) => {
+            return <div className={classes.task}>{task.title}</div>;
+          })}
           removeBoard={() => removeBoard(card)}
+          id={card.id}
         />
       ))}
     </div>
@@ -63,4 +61,3 @@ const BoxItem = ({ items }) => {
 };
 
 export default BoxItem;
-

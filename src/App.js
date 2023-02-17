@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import "./styles/App.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import BoxItem from "./components/BoxItem/BoxItem";
 import MyModal from "./components/UI/modal/myModal";
 import Header from "./components/Header/Header";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+import Homepage from "./Pages/Homepage";
+import Tasks from "./Pages/Tasks/Tasks";
 
 function App() {
-  const items = useSelector((state) => state.boardReducer.ITEMS);
-
   return (
     <div className="App">
-      <Header></Header>
-      <MyModal></MyModal>
-      <BoxItem items={items}></BoxItem>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Homepage />} />
+          <Route path="Tasks" element={<Tasks />} />
+        </Route>
+      </Routes>
     </div>
   );
 }

@@ -1,44 +1,43 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
+import { addTask } from "../../store/action";
 import MyButton from "../UI/button/myButton";
 import MyInput from "../UI/input/MyInput";
-import { addBoard } from "../../store/action";
 
-import classes from "./CreateBoard.module.css";
+import classes from "./CreateTask.module.css";
 
-const CreateBoard = () => {
+const CreateTask = () => {
   const dispatch = useDispatch();
+  const boardId = useSelector((state) => state.idReducer.id);
 
   const [title, setTitle] = useState("");
-  const addNewBoard = (e) => {
+  const addNewBoard = () => {
     if (title === "") {
       alert("Название не указано!");
     } else {
       const newBoard = {
         id: Date.now(),
-        text: title,
-        tasks: [],
+        title: title,
       };
-      dispatch(addBoard(newBoard));
+      dispatch(addTask({ id: boardId, some: newBoard }));
       setTitle("");
     }
   };
-
   return (
     <form className={classes.form}>
       <MyButton className={classes.element} onClick={addNewBoard}>
-        Создать доску
+        Создать задачу
       </MyButton>
       <MyInput
         className={classes.element}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         type="text"
-        placeholder="Название доски"
+        placeholder="Название задачи"
       />
     </form>
   );
 };
 
-export default CreateBoard;
+export default CreateTask;

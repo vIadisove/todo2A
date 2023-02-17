@@ -2,6 +2,14 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    max-width: 800px;
+    max-width: 1200px;
     margin-top: 60px;
+}
+
+.task {
+    font-size: 17px;
+    margin: 3px;
+    border-bottom: rgba(0, 0, 0, 0.29) 1px solid;
+    width: 87%;
+
 }
